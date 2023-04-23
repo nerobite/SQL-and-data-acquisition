@@ -6,6 +6,7 @@ join aircrafts a ON s.aircraft_code = a.aircraft_code
 group by a.model 
 having count(seat_no) < 50
 
+
 --2. Выведите процентное изменение ежемесячной суммы бронирования билетов, округленной до сотых.
 
 with cte as(
@@ -19,6 +20,7 @@ select
 	round(100.0*(b.pay_for_month - c.pay_for_month)/c.pay_for_month, 2) as change_percent
 from cte c
 right join cte b ON c.month_payments = b.month_payments - interval '1 month'
+
 
 --3. Выведите названия самолетов не имеющих бизнес - класс. Решение должно быть через функцию array_agg.
 
@@ -66,7 +68,6 @@ select *,
 from cte4
 
 
-
 --5. Найдите процентное соотношение перелетов по маршрутам от общего количества перелетов. 
 --Выведите в результат названия аэропортов и процентное отношение.
 --Решение должно быть через оконную функцию.
@@ -89,10 +90,9 @@ select *
 from cte2
 order by cte2.otkuda
 
+
 --6. Выведите количество пассажиров по каждому коду сотового оператора,
 -- если учесть, что код оператора - это три символа после +7
-explain analyse -- 70942 | 1691 - c окном
-				-- 65074 | 791 - без окна
 
 select tt.kod,
 		count(tt.passenger_id) 
@@ -127,6 +127,7 @@ select cte.rang,
 	count(cte.rang)
 from cte
 group by cte.rang
+
 
 --8. Вычислите медиану стоимости билетов, медиану размера бронирования и
 -- отношение медианы бронирования к медиане стоимости билетов, округленной до сотых.
